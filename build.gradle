@@ -1,8 +1,19 @@
+buildscript {
+	repositories {
+		jcenter()    // Bintray's repository - a fast Maven Central mirror & more
+		mavenCentral()
+	}
+	dependencies {
+		classpath 'com.google.cloud.tools:appengine-gradle-plugin:2.2.0' // If a newer version is available, use it
+	}
+}
+
 plugins {
 	id 'org.springframework.boot' version '2.4.5'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
 }
+
 
 group = 'com.seberino'
 version = '0.0.1-SNAPSHOT'
@@ -15,8 +26,15 @@ configurations {
 }
 
 repositories {
+	maven {
+		url 'https://oss.sonatype.org/content/repositories/snapshots' // SNAPSHOT repository (if needed)
+	}
 	mavenCentral()
+	jcenter()
 }
+
+apply plugin: 'com.google.cloud.tools.appengine'  // App Engine tasks
+
 
 
 dependencyManagement {
@@ -28,6 +46,9 @@ dependencyManagement {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	compile 'com.google.appengine:appengine-api-1.0-sdk:+'  // Latest App Engine Api's
+	compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.0'
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 	implementation 'org.flywaydb:flyway-core'
 	implementation 'com.google.cloud:spring-cloud-gcp-starter'
@@ -40,6 +61,13 @@ dependencies {
 	runtimeOnly 'org.postgresql:postgresql'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+appengine {  // App Engine tasks configuration
+	deploy {   // deploy configuration
+		projectId = System.getenv('GOOGLE_CLOUD_PROJECT')
+		version = '1'
+	}
 }
 
 test {

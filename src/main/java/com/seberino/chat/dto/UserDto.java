@@ -1,5 +1,6 @@
-package com.seberino.chat.request;
+package com.seberino.chat.dto;
 
+import com.seberino.chat.entity.Attachment;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,10 +10,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserRequest {
+public class UserDto {
     private String firstName;
 
     private String lastName;
 
     private String email;
+
+    private Attachment picture;
 }

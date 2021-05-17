@@ -1,4 +1,4 @@
-package com.seberino.chat.request;
+package com.seberino.chat.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
