@@ -13,7 +13,9 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 
@@ -34,7 +36,12 @@ public class UserController {
     public ResponseEntity<User> getUserInfo(Principal principal) {
         return ResponseEntity.ok(service.getUserByEmail(principal.getName()));
     }
-    
+
+    @PutMapping("/image")
+    public ResponseEntity<UserDto> setPictureToUser(@RequestPart("file") MultipartFile picture, Principal principal) throws IOException {
+        return ResponseEntity.ok(service.setPicture(service.getUserByEmail(principal.getName()), picture));
+    }
+
     @GetMapping("/contacts")
     public ResponseEntity<List<UserDto>> getContacts(Principal principal) {
         return ResponseEntity.ok(service.getContacts(service.getUserByEmail(principal.getName())));

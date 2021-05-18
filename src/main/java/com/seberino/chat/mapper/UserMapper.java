@@ -42,6 +42,8 @@ public class UserMapper {
         contacts.addAll(senderUsers);
         contacts.addAll(recipientUsers);
 
-        return contacts;
+        return contacts.stream()
+                .distinct()
+                .collect(Collectors.toList());
     }
 }
