@@ -22,11 +22,6 @@ public class MessageController {
         return ResponseEntity.ok(messageService.sendMessage(request, file));
     }
 
-    @GetMapping
-    public ResponseEntity<Object> getActiveConversations(Principal principal) {
-        return null;
-    }
-
     @GetMapping("/users")
     public ResponseEntity<Object> getMessagesFromConversation(Principal principal, @RequestParam String email) {
         return ResponseEntity.ok(messageService.getMessagesFromUserEmail(email));

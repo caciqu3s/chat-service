@@ -1,5 +1,6 @@
 package com.seberino.chat.controller;
 
+import com.seberino.chat.dto.UserDto;
 import com.seberino.chat.entity.User;
 import com.seberino.chat.model.LoginRequest;
 import com.seberino.chat.model.TokenResponse;
@@ -14,6 +15,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,6 +33,11 @@ public class UserController {
     @GetMapping
     public ResponseEntity<User> getUserInfo(Principal principal) {
         return ResponseEntity.ok(service.getUserByEmail(principal.getName()));
+    }
+    
+    @GetMapping("/contacts")
+    public ResponseEntity<List<UserDto>> getContacts(Principal principal) {
+        return ResponseEntity.ok(service.getContacts(service.getUserByEmail(principal.getName())));
     }
 
     @PostMapping("/login")

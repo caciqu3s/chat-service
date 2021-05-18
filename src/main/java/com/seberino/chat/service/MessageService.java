@@ -1,5 +1,6 @@
 package com.seberino.chat.service;
 
+import com.seberino.chat.dto.UserDto;
 import com.seberino.chat.entity.Attachment;
 import com.seberino.chat.entity.Message;
 import com.seberino.chat.entity.User;

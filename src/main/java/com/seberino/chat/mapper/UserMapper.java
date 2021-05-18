@@ -8,6 +8,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
 @RequiredArgsConstructor
 public class UserMapper {
@@ -28,5 +32,16 @@ public class UserMapper {
                 .lastName(user.getLastName())
                 .picture(user.getPicture())
                 .build();
+    }
+
+    public static List<User> getContacts(User user) {
+        List<User> senderUsers = user.getReceivedMessages().stream().map(messages -> messages.getSenderUser()).collect(Collectors.toList());
+        List<User> recipientUsers = user.getSentMessages().stream().map(messages -> messages.getRecipientUser()).collect(Collectors.toList());
+
+        List<User> contacts = new ArrayList<>();
+        contacts.addAll(senderUsers);
+        contacts.addAll(recipientUsers);
+
+        return contacts;
     }
 }
