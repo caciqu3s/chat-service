@@ -42,6 +42,6 @@ public class MessageService {
     }
 
     private void sendToSocket(Message message) {
-        simpMessagingTemplate.convertAndSend("/channel/" + message.getRecipientUser().getEmail(), message);
+        simpMessagingTemplate.convertAndSendToUser(message.getRecipientUser().getEmail(), "/queue/reply", message);
     }
 }
